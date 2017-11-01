@@ -12,11 +12,18 @@ Source1:	libgpujpeg-rpmlintrc
 BuildRequires:	gcc-c++,make,automake,autoconf,glew-devel,libtool
 #BuildRequires:	cuda-drivers = 340.29-0.x86_64,akmod-nvidia
 # see https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto
-%if 0%{?fedora} > 1 && 0%{?fedora} < 21
-BuildRequires:	cuda-core-6-5,cuda-command-line-tools-6-5,cuda-cudart-dev-6-5
-%else
+%if 0%{?fedora} > 1 && 0%{?fedora} < 24
 BuildRequires:	cuda-core-8-0,cuda-command-line-tools-8-0,cuda-cudart-dev-8-0
+%define cuda_host_compiler clang
+%else
+BuildRequires:	cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
+%if 0%{?fedora} > 1 && 0%{?fedora} > 25
+BuildRequires: gcc < 7
+%define cuda_host_compiler "$(basename "$(ls -1 /usr/bin/*gcc-6* | sort -rn | head -n 1)")"
+%else
 BuildRequires:	clang
+%define cuda_host_compiler clang
+%endif
 %endif
 
 %description
@@ -62,7 +69,7 @@ Simple wrapper binary for libgpujpeg.
 
 %build
 ./autogen.sh || true
-%configure --docdir=%{_docdir} --disable-static --enable-opengl --with-cuda-host-compiler=clang --with-cuda=/usr/local/cuda-8.0
+%configure --docdir=%{_docdir} --disable-static --enable-opengl --with-cuda-host-compiler=%cuda_host_compiler --with-cuda=$(find /usr/local/ -maxdepth 1 -type d -name 'cuda*' | sort -rn | head -n 1)
 make %{?_smp_mflags} LDFLAGS="$LDFLAGS -Wl,-rpath=%{JPEGLIBDIR}"
 
 %install
@@ -98,6 +105,9 @@ sh -c "$(ldd bin/gpujpeg $(find . -name '*.so*') 2>/dev/null | grep cuda | grep 
 %{_libdir}/libgpujpeg/config.h
 
 %changelog
+* Wed Nov 1 2017 Lukas Rucka <xrucka@fi.muni.cz> 20170331
+- Upgrade package specification to match cuda-9
+
 * Tue Feb 14 2017 Lukas Rucka <xrucka@fi.muni.cz> 20170331
 - integrated build patches into upstream, merged package specifications
 
