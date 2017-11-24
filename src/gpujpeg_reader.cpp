@@ -31,6 +31,7 @@
 #include <libgpujpeg/gpujpeg_decoder.h>
 #include <libgpujpeg/gpujpeg_decoder_internal.h>
 #include <libgpujpeg/gpujpeg_util.h>
+#include <string.h>
 
 /** Documented at declaration */
 struct gpujpeg_reader*
