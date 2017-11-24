@@ -13,23 +13,22 @@ BuildRequires:	gcc-c++,make,automake,autoconf,glew-devel,libtool
 #BuildRequires:	cuda-drivers = 340.29-0.x86_64,akmod-nvidia
 # see https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto
 %if 0%{?fedora} > 1
-
-	%if 0%{?fedora} < 24
-		BuildRequires:	cuda-core-8-0,cuda-command-line-tools-8-0,cuda-cudart-dev-8-0
-		%define cuda_host_compiler clang
-	%else
-		BuildRequires:	cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
-		%if 0%{?fedora} < 26
-			BuildRequires: gcc < 7
-		%else
-			BuildRequires: clang >= 4.0
-			%define cuda_gpu_compiler --cuda-compiler=clang
-		%endif
-	%endif
-	%define cuda_host_compiler "$(basename "$(ls -1 /usr/bin/*gcc-6* | sort -rn | head -n 1)")"
+%if 0%{?fedora} < 24
+BuildRequires:	cuda-core-8-0,cuda-command-line-tools-8-0,cuda-cudart-dev-8-0
+%define cuda_host_compiler clang
 %else
-	BuildRequires:	clang
-	%define cuda_host_compiler clang
+BuildRequires:	cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
+%if 0%{?fedora} < 26
+BuildRequires: gcc < 7
+%else
+BuildRequires: clang >= 4.0
+%define cuda_gpu_compiler --cuda-compiler=clang
+%endif
+%endif
+%define cuda_host_compiler "$(basename "$(ls -1 /usr/bin/*gcc-6* | sort -rn | head -n 1)")"
+%else
+BuildRequires:	clang
+%define cuda_host_compiler clang
 %endif
 
 %description
