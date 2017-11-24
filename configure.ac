@@ -181,6 +181,7 @@ Configuration summary:
   Constant tables.............. $enable_constant_tables
   OpenGL ...................... $enable_opengl
   Host compiler ............... $with_cuda_host_compiler
+  Cuda compiler ............... $CUDA_COMPILER
 
   CUDA root ................... $CUDA_INSTALL_PATH
 
