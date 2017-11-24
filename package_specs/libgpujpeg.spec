@@ -21,7 +21,7 @@ BuildRequires:	cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
 %if 0%{?fedora} < 26
 BuildRequires: gcc < 7
 %else
-BuildRequires: clang >= 5.0
+BuildRequires: clang >= 4.0
 %define cuda_gpu_compiler --cuda-compiler=clang
 %endif
 %endif
