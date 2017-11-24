@@ -17,8 +17,14 @@ BuildRequires:	cuda-core-8-0,cuda-command-line-tools-8-0,cuda-cudart-dev-8-0
 %define cuda_host_compiler clang
 %else
 BuildRequires:	cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
-%if 0%{?fedora} > 1 && 0%{?fedora} > 25
+%if 0%{?fedora} > 1
+%if 0%{?fedora} < 26
 BuildRequires: gcc < 7
+%else
+BuildRequires: clang >= 5.0
+%define cuda_gpu_compiler --cuda-compiler=clang
+%endif
+%endif
 %define cuda_host_compiler "$(basename "$(ls -1 /usr/bin/*gcc-6* | sort -rn | head -n 1)")"
 %else
 BuildRequires:	clang
@@ -69,7 +75,7 @@ Simple wrapper binary for libgpujpeg.
 
 %build
 ./autogen.sh || true
-%configure --docdir=%{_docdir} --disable-static --enable-opengl --with-cuda-host-compiler=%cuda_host_compiler --with-cuda=$(find /usr/local/ -maxdepth 1 -type d -name 'cuda*' | sort -rn | head -n 1)
+%configure --docdir=%{_docdir} --disable-static --enable-opengl --with-cuda-host-compiler=%cuda_host_compiler %{?cuda_gpu_compiler} --with-cuda=$(find /usr/local/ -maxdepth 1 -type d -name 'cuda*' | sort -rn | head -n 1)
 make %{?_smp_mflags} LDFLAGS="$LDFLAGS -Wl,-rpath=%{JPEGLIBDIR}"
 
 %install
