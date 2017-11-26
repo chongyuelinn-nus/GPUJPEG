@@ -20,12 +20,12 @@ BuildRequires:	cuda-core-8-0,cuda-command-line-tools-8-0,cuda-cudart-dev-8-0
 BuildRequires:	cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
 %if 0%{?fedora} < 26
 BuildRequires: gcc < 7
+%define cuda_host_compiler --with-cuda-host-compiler="$(basename "$(ls -1 /usr/bin/*gcc-6* | sort -rn | head -n 1)")"
 %else
 BuildRequires: clang >= 4.0
 %define cuda_gpu_compiler --with-cuda-compiler=clang
 %endif
 %endif
-%define cuda_host_compiler --with-cuda-host-compiler="$(basename "$(ls -1 /usr/bin/*gcc-6* | sort -rn | head -n 1)")"
 %else
 BuildRequires:  cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
 BuildRequires:	clang
