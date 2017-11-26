@@ -22,11 +22,12 @@ BuildRequires:	cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
 BuildRequires: gcc < 7
 %else
 BuildRequires: clang >= 4.0
-%define cuda_gpu_compiler --cuda-compiler=clang
+%define cuda_gpu_compiler --with-cuda-compiler=clang
 %endif
 %endif
 %define cuda_host_compiler "$(basename "$(ls -1 /usr/bin/*gcc-6* | sort -rn | head -n 1)")"
 %else
+BuildRequires:  cuda-core-9-0,cuda-command-line-tools-9-0,cuda-cudart-dev-9-0
 BuildRequires:	clang
 %define cuda_host_compiler clang
 %endif
