@@ -132,6 +132,7 @@ case "$CUDA_COMPILER" in
                 ;;
         *clang*)
                 CUDA_COMPUTE_ARGS="--cuda-gpu-arch=sm_30 --cuda-gpu-arch=sm_35"
+		CUDA_FLAGS+=" --cuda-path=$CUDA_INSTALL_PATH"
                 ;;
         *)
                 AC_MSG_ERROR([Unsupported cuda compiler $CUDA_COMPILER])
