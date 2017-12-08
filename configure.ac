@@ -146,7 +146,7 @@ if test "x${with_cuda_host_compiler}" != "x" ; then
 	AC_CHECK_PROG([cuda_host_cc], [${with_cuda_host_compiler}],[yes])
 	if test "x${cuda_host_cc}" = "xyes" -o -x "${with_cuda_host_compiler}"; then
 		CUDA_FLAGS+=" -ccbin ${with_cuda_host_compiler}"
-	ielse
+	else
 		AC_MSG_FAILURE([Binary ${with_cuda_host_compiler} given as cuda host compiler, yet not found!])
 	fi
 else
