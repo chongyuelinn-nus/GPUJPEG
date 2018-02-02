@@ -403,7 +403,7 @@ main(int argc, char *argv[])
 
                 GPUJPEG_TIMER_START();
 
-                if ( gpujpeg_encoder_encode(encoder, &encoder_input, &image_compressed, &image_compressed_size) != 0 ) {
+                if ( gpujpeg_encoder_encode(encoder, &encoder_input, &image_compressed, &image_compressed_size, false) != 0 ) {
                     fprintf(stderr, "Failed to encode image [%s]!\n", argv[index]);
                     return -1;
                 }

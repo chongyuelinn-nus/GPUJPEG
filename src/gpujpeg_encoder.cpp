@@ -147,7 +147,7 @@ gpujpeg_encoder_create(struct gpujpeg_parameters* param, struct gpujpeg_image_pa
 
 /** Documented at declaration */
 	int
-gpujpeg_encoder_encode(struct gpujpeg_encoder* encoder, struct gpujpeg_encoder_input* input, uint8_t** image_compressed, int* image_compressed_size, bool isOnDevice = false)
+gpujpeg_encoder_encode(struct gpujpeg_encoder* encoder, struct gpujpeg_encoder_input* input, uint8_t** image_compressed, int* image_compressed_size, bool isOnDevice/** = false**/)
 {
 	// Get coder
 	struct gpujpeg_coder* coder = &encoder->coder;
