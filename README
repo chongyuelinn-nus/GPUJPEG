@@ -1,5 +1,5 @@
 GPUJPEG
-  JPEG encoder and decoder library and console application for NVIDIA GPUs.
+  JPEG encoder and decoder library and console application for NVIDIA GPUs. ** Modified to take in image for encoding which is already in GPU**
 
 AUTHOR:
   Martin Srom, CESNET z.s.p.o
@@ -170,9 +170,11 @@ USAGE:
       uint8_t* image_compressed = NULL;
       int image_compressed_size = 0;
       if ( gpujpeg_encoder_encode(encoder, &encoder_input, &image_compressed, 
-               &image_compressed_size) != 0 )
+               &image_compressed_size, false) != 0 )
           return -1;
-            
+     
+    /** ** set the last variable to true if the image in the &encoder_input is on the device** **/        
+    
     Compressed data are placed in internal encoder buffer so we have to save 
     them somewhere else before we start encoding next image, for example we 
     can save them to file:
