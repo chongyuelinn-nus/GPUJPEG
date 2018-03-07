@@ -12,7 +12,7 @@ configure as
 # ./configure --with-cuda=/path/to/cuda/root
 
 == Instalation ==
-# make install
+# sudo make install -j
 
 For the default install DESTDIR value (/usr/local), consider updating your
 PKG_CONFIG_PATH and LD_LIBRARY_PATH variables
